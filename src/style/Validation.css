@@ -1,6 +1,6 @@
 span{
     height: 3vh;
-    width: 45vwW;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
 }
