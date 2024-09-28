@@ -8,7 +8,7 @@ const StyleButton = styled(motion.button)`
     border-radius: 50px;
     border: 0px;
     cursor: pointer;
-    background-color: #C7DB44;
+    background-color: #E3D4CA;
     padding: 15px;
     margin: 15px 0px;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
