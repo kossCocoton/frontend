@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 
 const StyleButton = styled(motion.button)`
     font-size: 1em;
-    font-weight: 800;
+    width: 100%;
+    font-weight: 200;
     border-radius: 50px;
     border: 0px;
     cursor: pointer;
