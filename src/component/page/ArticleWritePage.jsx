@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import moment from 'moment';
 import Layout from "../../Layout";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const ModalWrapper = styled.div`
     display: ${({ modalIsOpen }) => (modalIsOpen ? 'flex' : 'none')};
@@ -61,12 +62,29 @@ const StyledButtonContainer = styled.div`
     margin-top: 3vh;
 `;
 
+class WriteData {
+    constructor(title, content) {
+      this.title = title;
+      this.content = content;
+    }
+  }
+
 function ArticleWritePage({ modalIsOpen, setModalIsOpen }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const writeData = new writeData(title,content);
+        try {
+            // API에 POST 요청
+            const response = await axios.post('http://localhost:8080/api/diary', writeData);
+      
+          } catch (error) {
+            console.error('회원가입 실패', error);
+            alert('회원가입 실패');
+          }
         // 폼 제출 로직
         setModalIsOpen(false);
         navigate("/community");
