@@ -210,7 +210,7 @@ let radioOptions = [
             ))}
 
             <StyledButtonContainer>
-                <Button title="제출하기" onClick={handleSubmit} />
+                <Button title="제출하기"/>
             </StyledButtonContainer>
         </div>
     );
