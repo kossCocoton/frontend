@@ -4,7 +4,8 @@ import styled from "styled-components";
 import "../../style/Validation.css"
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import Diary from "../ui/Diary"
+import CalendarView from "../ui/CalendarView"
+import Header from "../ui/Header";
 
 const Wrapper = styled.div`
     height: 95vh;
@@ -74,15 +75,15 @@ const MyPage = () => {
                     <UserNickNameText>UserName</UserNickNameText>
                 </StressNumberContainer>
                 <Button
-                    title="스트레스 검사하기"
+                    title="일기쓰기"
                     onClick={() => {
-                        navigate("/test");
+                        navigate("/diary");
                       }}/>
                 <StressGraphContainer>
                     스트레스 지수 그래프 추가   
                 </StressGraphContainer>
             </MyInfoContainer>
-            <Diary />
+            <CalendarView />
         </Wrapper>
     )
 }
