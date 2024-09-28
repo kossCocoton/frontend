@@ -19,6 +19,7 @@ function App() {
 		<Route index element={<OnboardingPage />} />
 		<Route path="login" element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
+    
 		{/* <Route path="main/:communityid" element={<MainPage />} /> */}
 	</Routes>
   );

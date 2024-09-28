@@ -7,6 +7,7 @@ const StyledInput = styled.input`
     border-radius: 20px;
     border-style: hidden;
     box-shadow: 3px 4px 10px 2px #E3E3E3;
+    background-color: #F7F0EB;
     padding: 5px 10px;
     &:focus{
         outline: none;
