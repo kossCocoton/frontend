@@ -63,10 +63,10 @@ const required = (value) => {
 
 class LoginData {
     constructor(username, password) {
-      this.username = username;
-      this.password = password;
+        this.username = username;
+        this.password = password;
     }
-  }
+}
 
 const Loginpage = () => {
     const form = useRef();
@@ -87,20 +87,20 @@ const Loginpage = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault(); // 기본 폼 제출 방지
-        // 여기에서 추가적인 인증 로직이 들어갈 수 있습니다.
         const loginData = new LoginData(username, password);
         try {
             // API에 POST 요청
             const response = await axios.post('http://localhost:8080/auth/login', loginData);
-      
+
             if (response.status === 200) {
-              navigate("/community");
+                alert('로그인 성공!'); // 로그인 성공 시 alert
+                navigate("/community");
             }
-          } catch (error) {
+        } catch (error) {
             console.error('로그인 실패', error);
-            alert('로그인 실패');
-          }
-        navigate("/community"); // 로그인 후 /community로 이동
+            alert('로그인 실패: 잘못된 아이디나 비밀번호입니다.'); // 로그인 실패 시 alert
+            // navigate("/community"); // 로그인 실패 시 이동하지 않음
+        }
     };
 
     return (
