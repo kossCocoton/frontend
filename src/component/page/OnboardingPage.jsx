@@ -1,33 +1,48 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import EmoBin from '../img/EmoBin.svg';
 
-const StyleButton = styled(motion.button)`
-    font-size: 1em;
-    font-weight: 800;
-    border-radius: 50px;
-    border: 0px;
+const Container = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+`;
+
+const LogoImage = styled.img`
+    width: 360px; 
+    height: 110px; 
+`;
+
+const StartButton = styled.div`
+    padding: 12px 200px;
+    background-color: #E3D4CA;
+    border-radius: 20px;
     cursor: pointer;
-    background-color: #C7DB44;
-    padding: 15px;
-    margin: 15px 0px;
-    box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
-`
-const hoverVariants = {
-    grow: {
-      scale: 1.1
-    },
+`;
+
+const Subtitle = styled.h3`
+    font-size: 30px;
+    font-weight: 200;
+`;
+
+const OnboardingPage = () => {
+    const navigate = useNavigate(); 
+
+    const handleStartClick = () => {
+        navigate('/login'); 
+    };
+
+    return (
+        <Container>
+            <LogoImage src={ EmoBin } />
+            <StartButton onClick={handleStartClick}>시작하기</StartButton>
+            <Subtitle>감정은 쌓지 말고, 쓰레기통에 버리세요.</Subtitle>
+        </Container>
+    );
 };
 
-function Button(props){
-    const { title, onClick, disabled } = props;
-
-    return(
-        <StyleButton onClick={onClick} animate={["initial"]}
-        whileHover={["grow"]} variants={hoverVariants} disabled={disabled}>
-            { title || "버튼"}
-        </StyleButton>
-    );
-}
-
-export default Button;
+export default OnboardingPage;
