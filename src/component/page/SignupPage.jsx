@@ -6,6 +6,7 @@ import EmoBin from '../img/EmoBin.svg';
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Select from 'react-select';
+import axios from 'axios';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -65,25 +66,38 @@ const Under_text = styled.div`
 `;
 
 let genderoptions = [
-  { value: "male", label: "남" },
-  { value: "female", label: "여" },
+  { value: "여성", label: "여성" },
+  { value: "남성", label: "남성" },
+  { value: "선택안합", label: "선택안함" },
 ];
 
 let occoptions = [
-  { value: "예시1", label: "예시1" },
-  { value: "예시2", label: "예시2" },
-  { value: "예시3", label: "예시3" },
-  { value: "예시4", label: "예시4" },
-  { value: "예시5", label: "예시5" },
+  { value: "학생", label: "학생" },
+  { value: "직장인", label: "직장인" },
+  { value: "무직", label: "무직" }
 ];
 
 let ageoptions = [
-  { value: "under10", label: "10대 이하" },
-  { value: "10", label: "10대" },
-  { value: "20", label: "20대" },
-  { value: "30", label: "30대" },
-  { value: "over40", label: "40대 이상" },
+  { value: "TEN", label: "10대 이하" },
+  { value: "TWENTY", label: "20대" },
+  { value: "THIRTY", label: "30대" },
+  { value: "FOURTY", label: "40대" },
+  { value: "FIFTY", label: "50대" },
+  { value: "SIXTY_UP", label: "60대 이상" },
 ];
+
+// 회원가입 정보를 담는 클래스
+class SignUpData {
+  constructor(username, password, nickname, gender, job, age) {
+    this.username = username;
+    this.password = password;
+    this.nickname = nickname;
+    this.age = age;
+    this.job = job;
+    this.gender = gender;
+  }
+}
+
 
 const SignupPage = (props) => {
   const navigate = useNavigate();
@@ -158,6 +172,37 @@ const SignupPage = (props) => {
       setUsernicknameMessage(true);
     }
   }
+
+  // 회원가입 폼 제출 함수
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    // 비밀번호 확인
+    if (password !== pw2) {
+      setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
+      setIsPasswordConfirm(false);
+      return;
+    } else {
+      setPasswordConfirmMessage('비밀번호가 일치합니다.');
+      setIsPasswordConfirm(true);
+    }
+
+    // 회원가입 데이터를 클래스로 생성
+    const signUpData = new SignUpData(username, password, nickname, gender, occ, age);
+
+    try {
+      // API에 POST 요청
+      const response = await axios.post('http://localhost:8080/auth/signup', signUpData);
+
+      if (response.status === 200) {
+        setSuccessful(true);
+        navigate("/community");
+      }
+    } catch (error) {
+      console.error('회원가입 실패', error);
+      alert('회원가입 실패');
+    }
+  };
 
   return (
     <Wrapper>
@@ -303,9 +348,14 @@ const SignupPage = (props) => {
             </StyledSelectBoxContainer>
 
             <StyledButtonContainer>
-              <Button
-                title="EmoBin으로 회원가입"
-              />
+            <Button
+              onClick={(e) => {
+                e.preventDefault();  // preventDefault를 호출해서 기본 동작을 막음
+                onSubmit(e);         // onSubmit에 이벤트 객체 전달
+                navigate("/community");
+              }} 
+              title="EmoBin으로 회원가입"
+            />
               <Under_text
                 onClick={() => {
                   navigate("/login");
