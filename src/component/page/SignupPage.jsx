@@ -58,7 +58,8 @@ const StyledInputForm = styled.div`
   width: 50vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 5%;
+  padding-right: 30%;
   >Input{
     justify-content: center;
     width: 30vw;
@@ -70,11 +71,9 @@ const StyledSelectBoxContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 1vw;
-  padding-right: 5vw;
+  padding-right: 8vw;
+  padding-left: 1vw;
   
-  .react-select-container{
-    width: 15vw;
-  }
 `
 
 const StyledButtonContainer = styled.div`
@@ -87,7 +86,7 @@ const StyledButtonContainer = styled.div`
   align-items: center;
   
   >Button{
-    width: 10vw;
+    width: 30vw;
     justify-content: center;
   }
 `
@@ -102,6 +101,14 @@ let genderoptions = [
   { value: "female", label: "여" },
 ];
 
+let occoptions = [
+  { value: "예시1", label: "예시1" },
+  { value: "예시2", label: "예시2" },
+  { value: "예시3", label: "예시3" },
+  { value: "예시4", label: "예시4" },
+  { value: "예시5", label: "예시5" },
+]
+
 let ageoptions = [
   { value: "under10", label: "10대 이하" },
   { value: "10", label: "10대" },
@@ -109,6 +116,7 @@ let ageoptions = [
   { value: "30", label: "30대" },
   { value: "over40", label: "40대 이상" },
 ]
+
 
 const SignupPage = (props) => {
   const form = useRef();
@@ -119,20 +127,21 @@ const SignupPage = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [pw2, setPw2] = useState("");
-  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
   const [gender, setGender] = useState("female");
+  const [occ, setOcc] = useState("예시")
   const [age, setAge] = useState("20대");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const [usernameMessage, setUsernameMessage] = useState('');
-  const [emailMessage, setEmailMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+  const [usernicknameMessage, setUsernicknameMessage] = useState('');
 
   const [isusername, setIsUserName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
+  const [isusernickname, setIsnickname] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
@@ -178,23 +187,18 @@ const SignupPage = (props) => {
 
   }
 
-  const onChangeEmail= (e) => {
-    const email = e.target.value;
-    setEmail(email);
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email)) {
-      setEmailMessage('이메일 형식이 틀렸습니다.');
-      setIsEmail(false);
-    } else {
-      setEmailMessage('');
-      setIsEmail(true);
-    }
+  const onChangeNIckname= e => {
+    const nickname = e.target.value;
+    setNickname(e.target.value);
+
   }
+
+
 
   return(
       <Wrapper>
             <Container>
-              <SubTitle>추억 저장 서비스 Wemory</SubTitle>
+              <SubTitle>Emobin</SubTitle>
               {/* <Form> */}
                   {!successful && (
                   <div>
@@ -210,31 +214,86 @@ const SignupPage = (props) => {
                         <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
                         {passwordConfirmMessage &&(<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
 
-                        <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
-                        {emailMessage && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
+                        <StyledInputForm><Text>닉네임</Text><Input type="text" name="nickname" id="nickname" className="idinput" value={nickname} onChange={onChangeNIckname}/><br /></StyledInputForm>                        
+                        {usernameMessage && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
                       </label>
                     </StyledInputContainer>
 
                     <StyledSelectBoxContainer>
-                        <Text>성별</Text>
+                        <Text></Text>
                         <Select
                           className="react-select-container"
                           options={genderoptions}
                           onChange={(e) => {setGender(e.value)}}
-                          placeholder="성별을 입력해주세요"
-                          components={{
-                            IndicatorSeparator: () => null
+                          placeholder="성별"
+                          styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              backgroundColor: '#F7F0EB', 
+                            }),
+                            singleValue: (provided) => ({
+                              ...provided,
+                              fontWeight: 'bold',
+                            }),
+                            placeholder: (provided) => ({
+                              ...provided,
+                              color: '#333',
+                              fontWeight: 'bold', 
+                            }),
+                            indicatorSeparator: () => null, 
                           }}
                         />
 
-                        <Text>나이</Text>
+                        <Text></Text>
+                        <Select
+                          className="react-select-container"
+                          options={occoptions}
+                          onChange={(e) => {setOcc(e.value)}}
+                          placeholder="직업"
+                          styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              backgroundColor: '#F7F0EB', 
+                            }),
+                            singleValue: (provided) => ({
+                              ...provided,
+                              fontWeight: 'bold',
+                            }),
+                            placeholder: (provided) => ({
+                              ...provided,
+                              color: '#333',
+                              fontWeight: 'bold', 
+                            }),
+                            indicatorSeparator: () => null, 
+                        
+                          }}
+                        />
+
+
+                        <Text></Text>
                         <Select
                             className="react-select-container"
                             options={ageoptions}
                             onChange={(e) => {setAge(e.value)}}
-                            placeholder="나이를 입력해주세요"
+                            placeholder="나이대"
                             components={{
                               IndicatorSeparator: () => null
+                            }}
+                            styles={{
+                              control: (provided) => ({
+                                ...provided,
+                                backgroundColor: '#F7F0EB', 
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                fontWeight: 'bold',
+                              }),
+                              placeholder: (provided) => ({
+                                ...provided,
+                                color: '#333',
+                                fontWeight: 'bold', 
+                              }),
+                              indicatorSeparator: () => null, 
                             }}
                           />
                       </StyledSelectBoxContainer>
@@ -242,7 +301,7 @@ const SignupPage = (props) => {
 
                     <StyledButtonContainer>
                       <Button
-                          title="회원가입"
+                          title="EmoBin으로 회원가입"
                           />
                       <Under_text
                       onClick={() => {
