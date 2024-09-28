@@ -2,6 +2,7 @@ import {React, useState, useEffect, useRef} from "react";
 // import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../ui/Button";
+import Input from "../ui/Input";
 import moment from 'moment';
 import { useNavigate, useParams } from "react-router-dom";;
 
@@ -58,6 +59,7 @@ const StyledInputContent = styled.div`
     margin-top : 1vh;
     margin-left : 3vw;
     margin-right : 3vw;
+    width: 100%;
     >textarea {
         border : 0px solid;
         width : 100%;
@@ -165,7 +167,8 @@ function DiaryWritePage(props) {
 
                 <TitleText>글을 작성하세요! ({content.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
                 <StyledInputContent>
-                    <textarea
+                    <Input />
+                    {/* <textarea
                         name="content"
                         id="content"
                         maxLength={200}
@@ -173,7 +176,7 @@ function DiaryWritePage(props) {
                         required
                         onChange={onChangeContent}
                         placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
-                    />
+                    /> */}
                 </StyledInputContent>
                 <StyledButtonContainer>
                     <Button

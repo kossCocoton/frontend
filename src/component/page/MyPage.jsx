@@ -5,7 +5,7 @@ import "../../style/Validation.css"
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import CalendarView from "../ui/CalendarView"
-import Header from "../ui/Header";
+import Layout from "../../Layout";
 
 const Wrapper = styled.div`
     height: 95vh;
@@ -64,6 +64,7 @@ const MyPage = () => {
     const navigate = useNavigate();
 
     return(
+        <Layout>
         <Wrapper>
             <MyInfoContainer>
                 <InfoText>내 정보</InfoText>
@@ -85,6 +86,7 @@ const MyPage = () => {
             </MyInfoContainer>
             <CalendarView />
         </Wrapper>
+        </Layout>
     )
 }
 

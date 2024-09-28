@@ -10,7 +10,7 @@ const Container = styled.div`
     top: 0;
     width: 100%;
     min-height: 5vh; // 최소 높이 설정
-    padding: 16px 50px; // 위아래 패딩
+    padding: 1vh 30px; // 위아래 패딩
     border-bottom: 0.5px solid #D2CFCF;
     display: flex;
     justify-content: space-between;
@@ -34,7 +34,6 @@ const Logo = styled.div`
 
 const Nav = styled.div`
     display: flex;
-    padding-right: 70px;
     gap: 40px;
     align-items: center;
 `;
