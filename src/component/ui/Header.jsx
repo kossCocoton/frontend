@@ -5,17 +5,17 @@ import TrashCanIcon from '../img/TrashCanIcon.svg';
 import CommunityIcon from '../img/CommunityIcon.svg';
 import UserIcon from '../img/UserIcon.svg';
 
-// 스타일 컴포넌트 정의
 const Container = styled.div`
     position: fixed;
     top: 0;
     width: 100%;
-    height: 5vw;
-    padding: 16px 30px;
+    min-height: 5vh; // 최소 높이 설정
+    padding: 16px 50px; // 위아래 패딩
     border-bottom: 0.5px solid #D2CFCF;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box; // padding과 border 포함하여 너비 계산
 `;
 
 const Iconimage = styled.img`
