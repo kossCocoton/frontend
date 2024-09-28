@@ -56,8 +56,8 @@ function CalendarView(props){
                       }}
                 />
             </Container>
-            
-            <DiaryViewPage 
+
+            <DiaryViewPage
                 date={moment(value).format('YYMMDD')} 
                 modalIsOpen={modalIsOpen} 
                 setModalIsOpen={setModalIsOpen} 

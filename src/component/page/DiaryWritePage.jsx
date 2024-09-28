@@ -2,6 +2,7 @@ import {React, useState, useEffect, useRef} from "react";
 // import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../ui/Button";
+import moment from 'moment';
 import { useNavigate, useParams } from "react-router-dom";;
 
 const Wrapper = styled.div`
@@ -9,6 +10,7 @@ const Wrapper = styled.div`
     align-items: center;
     height: 95vh;
     display: flex;
+    flex-direction: column;
 `
 
 const ContentText = styled.div`
@@ -16,11 +18,11 @@ const ContentText = styled.div`
     font-size : 2vh;
     font-weight : 600;
 `
-const DateText = styled.div`
-    text-align : center;
-    color: #C7DB44;
-    margin-bottom : 3vh;
+
+const DiaryWriteContainer = styled.div`
+    margin-top: 20px;
 `
+
 const TitleText = styled.div`
     display: flex;
     width: 40vw;
@@ -98,14 +100,6 @@ const FileUpload = styled.div`
         border: 0;
     }
 `
-
-const Highlight = styled.span`
-    color: #C7DB44;
-    font-size: 3vh;
-    padding-left: 0px;
-    width: 10px;
-`
-
 const StyledButtonContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -128,13 +122,13 @@ const required = (value) => {
     }
 };
 
-function DiaryWritePage(props){
+function DiaryWritePage(props) {
     const form = useRef();
     const params = useParams();
-    const today = params.date;
+
+    const today = params.date || moment().format('YYMMDD');
     const navigate = useNavigate();
 
-    //const [date, setDate] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [successful, setSuccessful] = useState(false);
@@ -150,53 +144,48 @@ function DiaryWritePage(props){
         setTitle(title);
     };
 
-    return(
+    return (
         <Wrapper>
-            <ContentText>{props.date}</ContentText>
-            <div>
-                <TitleText>일기 제목 ({title.replace(/<br\s*\?>/gm, "\n").length}글자)<Highlight>*</Highlight></TitleText>
-                <StyledInputForm><input
-                    type="text"
-                    name="title"
-                    id="title"
-                    maxLength={20}
-                    value={title}
-                    required
-                    onChange={onChangeTitle}
-                    validations={[required]}
-                    placeholder="20글자 이내로 제목을 입력해주세요 :)"
-                />
+            <ContentText>{today}</ContentText>
+            <DiaryWriteContainer>
+                <TitleText>일기 제목 ({title.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
+                <StyledInputForm>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        maxLength={20}
+                        value={title}
+                        required
+                        onChange={onChangeTitle}
+                        placeholder="20글자 이내로 제목을 입력해주세요 :)"
+                    />
                 </StyledInputForm>
-                <Line/>
+                <Line />
 
-                <TitleText>글을 작성하세요! ({content.replace(/<br\s*\?>/gm, "\n").length}글자)<Highlight>*</Highlight></TitleText>
-                <StyledInputContent><textarea
-                    type="textarea"
-                    name="content"
-                    id="content"
-                    maxLength={200}
-                    value={content}
-                    required
-                    onChange={onChangeContent}
-                    validations={[required]}
-                    placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
-                />
+                <TitleText>글을 작성하세요! ({content.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
+                <StyledInputContent>
+                    <textarea
+                        name="content"
+                        id="content"
+                        maxLength={200}
+                        value={content}
+                        required
+                        onChange={onChangeContent}
+                        placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
+                    />
                 </StyledInputContent>
-                <div class="button-container">
-                    <div class="button-div">
-                    <StyledButtonContainer>
+                <StyledButtonContainer>
                     <Button
-                            title="스트레스 지수 검사하기"
-                            onClick={() => {
-                                navigate("/test");
-                            }}
-                        />
-                    </StyledButtonContainer>
-                    </div>
-                </div>
-            </div>
+                        title="스트레스 지수 검사하기"
+                        onClick={() => {
+                            navigate("/test");
+                        }}
+                    />
+                </StyledButtonContainer>
+            </DiaryWriteContainer>
         </Wrapper>
-    )
+    );
 }
 
 export default DiaryWritePage;
