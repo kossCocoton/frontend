@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import EmoBin from '../img/EmoBin.svg';
-import TrashCanIcon from '../img/TrashCanIcon.svg';
-import CommunityIcon from '../img/CommunityIcon.svg';
-import UserIcon from '../img/UserIcon.svg';
+import TrashCanIcon from '../img/TrashCanIcon.png';
+import CommunityIcon from '../img/CommunityIcon.png';
+import UserIcon from '../img/UserIcon.png';
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -48,7 +48,7 @@ function Header() {
             </Logo>
             <Nav>
                 <Iconimage src={TrashCanIcon} onClick={() => navigate("/emotion")} />
-                <Iconimage src={CommunityIcon} onClick={() => navigate("/communtiy")} />
+                <Iconimage src={CommunityIcon} onClick={() => navigate("/community")} />
                 <Iconimage src={UserIcon} onClick={() => navigate("/my")} />
             </Nav>
         </Container>
