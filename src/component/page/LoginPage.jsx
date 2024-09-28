@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import EmoBin from '../img/EmoBin.svg';
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
+import axios from 'axios';
 
 const Wrapper = styled.div`
     height: 100vh;
@@ -60,6 +61,13 @@ const required = (value) => {
     }
 };
 
+class LoginData {
+    constructor(username, password) {
+      this.username = username;
+      this.password = password;
+    }
+  }
+
 const Loginpage = () => {
     const form = useRef();
     const checkBtn = useRef();
@@ -77,9 +85,21 @@ const Loginpage = () => {
         setPassword(e.target.value);
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault(); // 기본 폼 제출 방지
         // 여기에서 추가적인 인증 로직이 들어갈 수 있습니다.
+        const loginData = new LoginData(username, password);
+        try {
+            // API에 POST 요청
+            const response = await axios.post('http://localhost:8080/auth/login', loginData);
+      
+            if (response.status === 200) {
+              navigate("/community");
+            }
+          } catch (error) {
+            console.error('로그인 실패', error);
+            alert('로그인 실패');
+          }
         navigate("/community"); // 로그인 후 /community로 이동
     };
 
