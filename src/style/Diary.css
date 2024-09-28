@@ -127,9 +127,10 @@
   }
   
   .react-calendar__tile--now > abbr{
-    background-color: #9DD363;
+    text-decoration: 1px solid #FFFFFF;
+    background-color: #757575;
+    border-radius: 15%;
     width: 60%;
-    border-radius: 100%;
   }
   
   .highlight > abbr{

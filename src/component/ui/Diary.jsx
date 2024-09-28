@@ -6,18 +6,16 @@ import '../../style/Modal.css';
 
 const Wrapper = styled.div`
     width: 50vw;
-    height: 75vh;
-    margin: 25px 0px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 `
 
 const Container = styled.div`
-    height: 75vh;
     justify-content: center;
     border-radius: 20px;
-    box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
+    /* box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2); */
+    border: 1px solid #E2E2E2;
     background-color: #FFFFFF;
 `
 const StyledComname = styled.div`
