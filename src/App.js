@@ -14,10 +14,12 @@ import OnboardingPage from "./component/page/OnboardingPage";
 import CommunityPage  from "./component/page/CommunityPage";
 import MyPage from "./component/page/MyPage";
 import DiaryWritePage from "./component/page/DiaryWritePage";
+import EmotionPage from "./component/page/EmotionPage";
+import { EmotionProvider } from "./component/list/EmotionList";
 
 function App() {
   return (
-	
+	<EmotionProvider>
 	<Routes>
 		<Route index element={<OnboardingPage />} />
 		<Route path="login" element={<LoginPage />} />
@@ -25,8 +27,10 @@ function App() {
 		<Route path="community" element={<CommunityPage />} />
     	<Route path="my" element={<MyPage />} />
 		<Route path="diary" element={<DiaryWritePage />} />
+		<Route path="emotion" element={<EmotionPage />} />
 		{/* <Route path="main/:communityid" element={<MainPage />} /> */}
 	</Routes>
+	</EmotionProvider>
   );
 }
 

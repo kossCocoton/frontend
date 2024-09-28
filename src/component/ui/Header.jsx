@@ -4,6 +4,7 @@ import EmoBin from '../img/EmoBin.svg';
 import TrashCanIcon from '../img/TrashCanIcon.svg';
 import CommunityIcon from '../img/CommunityIcon.svg';
 import UserIcon from '../img/UserIcon.svg';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     position: fixed;
@@ -39,15 +40,16 @@ const Nav = styled.div`
 `;
 
 function Header() {
+    const navigate = useNavigate();
     return (
         <Container>
             <Logo>
                 <LogoImage src={EmoBin} />
             </Logo>
             <Nav>
-                <Iconimage src={TrashCanIcon} />
-                <Iconimage src={CommunityIcon} />
-                <Iconimage src={UserIcon} />
+                <Iconimage src={TrashCanIcon} onClick={() => navigate("/emotion")} />
+                <Iconimage src={CommunityIcon} onClick={() => navigate("/communtiy")} />
+                <Iconimage src={UserIcon} onClick={() => navigate("/my")} />
             </Nav>
         </Container>
     );
