@@ -37,6 +37,19 @@ const DateText = styled.div`
     color: #333;
 `;
 
+const CommentsContainer = styled.div`
+    margin-top: 2vh;
+    width: 100%;
+`;
+
+const Comment = styled.div`
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+`;
+
+
 const DisplayText = styled.div`
     margin-top: 1vh;
     border: 0px solid;
@@ -55,7 +68,7 @@ const DisplayContent = styled.div`
     margin-top: 3vh;
     border: 0px solid;
     width: 100%;
-    height: 20vh;
+    height: 15vh;
     font-size: 2vh;
     font-weight: 500;
     background-color: #F7F0EB;
@@ -96,8 +109,8 @@ const StyledModal = {
         outline: "none",
         zIndex: 10,
         top: '10vh',
-        left: '10vw',
-        right: '10vw',
+        left: '20vw',
+        right: '20vw',
         bottom: '10vh',
         padding: '20px',
         boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
@@ -143,6 +156,12 @@ function ArticleViewPage({ post, modalIsOpen, setModalIsOpen }) {
                 <DateText>{post.date}</DateText>
                 <DisplayText>{post.title}</DisplayText>
                 <DisplayContent>{post.content}</DisplayContent>
+
+                <CommentsContainer>
+                    {post.comments && post.comments.map((comment, index) => (
+                        <Comment key={index}>{comment}</Comment>
+                    ))}
+                </CommentsContainer>
                 <ButtonContainer>
                     <Button
                         title="확인"
