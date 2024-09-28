@@ -5,6 +5,8 @@ import StressIcon from "../img/StressIcon.png";
 import PostIcon from "../img/PostIcon.png";
 import Select from 'react-select';
 import ArticleWritePage from "./ArticleWritePage";
+import ArticleViewPage from "./ArticleViewPage";
+import PostList from "../list/PostList";
 
 const Container = styled.div`
     display: flex;
@@ -16,7 +18,7 @@ const Container = styled.div`
 
 const PostTopContainer = styled.div`
     height: 15vh;
-    margin: 20px 0px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
 `;
@@ -51,57 +53,82 @@ const Icon = styled.img`
 `;
 
 const StyledSelectBoxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Text = styled.div`
-  width: 100px;
-  text-align: right;
-  font-size: 20px;
-  font-weight: bold;
-  margin-right: 10px;
-  justify-content: center;
-`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 let genderoptions = [
     { value: "male", label: "남" },
     { value: "female", label: "여" },
-  ];
-  
-  let occoptions = [
+];
+
+let occoptions = [
     { value: "예시1", label: "예시1" },
     { value: "예시2", label: "예시2" },
     { value: "예시3", label: "예시3" },
     { value: "예시4", label: "예시4" },
     { value: "예시5", label: "예시5" },
-  ]
-  
-  let ageoptions = [
+];
+
+let ageoptions = [
     { value: "under10", label: "10대 이하" },
     { value: "10", label: "10대" },
     { value: "20", label: "20대" },
     { value: "30", label: "30대" },
     { value: "over40", label: "40대 이상" },
-  ]
+];
 
-  function CommunityPage() {
-    const [message, setMessage] = useState("");
+function CommunityPage() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [viewModalIsOpen, setViewModalIsOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 저장
 
     const [gender, setGender] = useState("female");
     const [occ, setOcc] = useState("예시");
     const [age, setAge] = useState("20대");
 
     const handleViewMyPosts = () => {
-        setMessage("내 글 보기 클릭!");
+        console.log("내 글 보기 클릭!");
     };
 
     const handleWritePost = () => {
-        setModalIsOpen(true); // 모달 열기
+        setModalIsOpen(true); // 작성 모달 열기
     };
 
+    const handlePostClick = (post) => {
+        console.log("Opening post:", post); // Debug log
+        setSelectedPost(post);
+        setViewModalIsOpen(true);
+    };  
+
+    const posts = [
+        {
+            id: 1,
+            title: "첫 번째 글",
+            ageGroup: "20대",
+            nickname: "작성자1",
+            job: "개발자",
+            date: "2023-09-29",
+            gender: "여",
+            category: "일상",
+            content: "첫 번째 게시글의 내용입니다.",
+            comments: ["좋은 글입니다!", "감사합니다!"]
+        },
+        {
+            id: 2,
+            title: "두 번째 글",
+            ageGroup: "30대",
+            nickname: "작성자2",
+            job: "디자이너",
+            date: "2023-09-28",
+            gender: "남",
+            category: "기술",
+            content: "두 번째 게시글의 내용입니다.",
+            comments: ["유익하네요.", "더 알고 싶어요!"]
+        },
+    ];
+    
     return (
         <Layout>
             <Container>
@@ -116,7 +143,6 @@ let genderoptions = [
                             작성하기
                         </SquareButton>
                     </ButtonContainer>
-
                     <StyledSelectBoxContainer>
                         <Select
                           className="react-select-container"
@@ -160,10 +186,8 @@ let genderoptions = [
                               fontWeight: 'bold', 
                             }),
                             indicatorSeparator: () => null, 
-                        
                           }}
                         />
-                        
                         <Select
                             className="react-select-container"
                             options={ageoptions}
@@ -189,20 +213,36 @@ let genderoptions = [
                               indicatorSeparator: () => null, 
                             }}
                           />
-                      </StyledSelectBoxContainer>
-                      </PostTopContainer>
+                    </StyledSelectBoxContainer>
+                </PostTopContainer>
 
-                        <PostContainer>
-                            {message && <div>{message}</div>}
-                        </PostContainer>
-
-                        <ArticleWritePage
-                            modalIsOpen={modalIsOpen} 
-                            setModalIsOpen={setModalIsOpen} 
+                <PostContainer>
+                    {posts.map((post, index) => (
+                        <PostList 
+                            key={index}
+                            title={post.title}
+                            ageGroup={post.ageGroup}
+                            nickname={post.nickname}
+                            job={post.job}
+                            date={post.date}
+                            onClick={() => handlePostClick(post)} // 클릭 시 게시글 전달
                         />
-                    </Container>
-                    </Layout>
-                );
-            }
+                    ))}
+                </PostContainer>
+
+                <ArticleWritePage 
+                    modalIsOpen={modalIsOpen} 
+                    setModalIsOpen={setModalIsOpen}
+                />
+
+                <ArticleViewPage 
+                    modalIsOpen={viewModalIsOpen} 
+                    setModalIsOpen={setViewModalIsOpen}
+                    post={selectedPost} // 선택된 게시글 전달
+                />
+            </Container>
+        </Layout>
+    );
+}
 
 export default CommunityPage;
