@@ -7,10 +7,10 @@
   appearance: none;
   border: max(2px, 0.1em) solid gray;
   border-radius: 50%;
-  width: 1.25em;
-  height: 1.25em;
-  margin-left: 160px;
-  margin-bottom: 50px;
+  width: 1em;
+  height: 1em;
+  margin-left: 70px;
+  margin-bottom: 30px;
 }
 
 [type="radio"]:checked {

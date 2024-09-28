@@ -1,5 +1,5 @@
 import React from "react";
-import "./Radio.css";
+import "../../style/Radio.css";
 
 function Radio({ children, value, name, defaultChecked, disabled }) {
     return (
