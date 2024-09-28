@@ -141,7 +141,7 @@ const SignupPage = (props) => {
   const [usernicknameMessage, setUsernicknameMessage] = useState('');
 
   const [isusername, setIsUserName] = useState(false);
-  const [isusernickname, setIsnickname] = useState(false);
+  const [isusernickname, setIsUsernickname] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
@@ -187,10 +187,18 @@ const SignupPage = (props) => {
 
   }
 
-  const onChangeNIckname= e => {
+  const onChangeNickname = e => {
     const nickname = e.target.value;
-    setNickname(e.target.value);
-
+    setNickname(nickname);
+  
+    const usernicknameRegex = /^[가-힣]{1,10}$/; // 한글만 1글자 이상 10글자 이하
+    if (!usernicknameRegex.test(nickname)) {
+      setUsernicknameMessage('1글자 이상 10글자 이하의 한글만 입력 가능합니다.');
+      setIsUsernickname(false); // 여기서 변경된 상태 사용
+    } else {
+      setUsernicknameMessage("");
+      setIsUsernickname(true); // 상태 변경
+    }
   }
 
 
@@ -214,8 +222,8 @@ const SignupPage = (props) => {
                         <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
                         {passwordConfirmMessage &&(<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
 
-                        <StyledInputForm><Text>닉네임</Text><Input type="text" name="nickname" id="nickname" className="idinput" value={nickname} onChange={onChangeNIckname}/><br /></StyledInputForm>                        
-                        {usernameMessage && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
+                        <StyledInputForm><Text>닉네임</Text><Input type="text" name="nickname" id="nickname" className="idinput" value={nickname} onChange={onChangeNickname}/><br /></StyledInputForm>                        
+                        {usernicknameMessage && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernicknameMessage}</span>)}
                       </label>
                     </StyledInputContainer>
 
