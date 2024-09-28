@@ -56,7 +56,8 @@ const StyledInputForm = styled.div`
   width: 50vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 35%;
+  padding-right: 30%;
   >Input{
     justify-content: center;
     width: 30vw;
@@ -73,7 +74,7 @@ const StyledButtonContainer = styled.div`
   align-items: center;
   
   >Button{
-    width: 10vw;
+    width: 30vw;
     justify-content: center;
   }
 `
@@ -121,8 +122,7 @@ const Loginpage = () => {
     return(
         <Wrapper>
             <Container>
-                <SubTitle>추억 저장 서비스 Wemory</SubTitle>
-                <MainTitle>로그인</MainTitle>
+                <MainTitle>EmoBin</MainTitle>
                 <Form>
                     <StyledInputContainer>
                         <StyledInputForm><Text>아이디</Text><Input type="text" name="id" value={username} onChange={onChangeUsername} validations={[required]}/><br /></StyledInputForm>
@@ -133,7 +133,7 @@ const Loginpage = () => {
                     
                     <StyledButtonContainer>
                       <Button
-                        title="로그인"
+                        title="Emobin으로 로그인"
                         />
                       <Under_text onClick={() => {navigate("/signup")}}>
                         계정이 없나요?
