@@ -1,5 +1,4 @@
 // PostItem.jsx
-import { style } from "framer-motion/client";
 import React from "react";
 import styled from "styled-components";
 
@@ -17,7 +16,7 @@ const Title = styled.h2`
 `;
 
 const SubTitle = styled.h3`
-    
+    margin: 0; // 추가: 여백 제거
 `;
 
 const InfoContainer = styled.div`
@@ -25,11 +24,12 @@ const InfoContainer = styled.div`
     justify-content: space-between;
     font-size: 14px;
     color: #666;
+    width: 100%; // 추가: 너비 설정
 `;
 
-const PostList = ({ title, ageGroup, nickname, job, date }) => {
+const PostList = ({ title, ageGroup, nickname, job, date, onClick }) => {
     return (
-        <PostContainer>
+        <PostContainer onClick={onClick}> {/* 클릭 이벤트 핸들러 추가 */}
             <InfoContainer>
                 <Title>{title}</Title>
                 <SubTitle>{ageGroup}</SubTitle>

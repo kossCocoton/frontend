@@ -236,10 +236,11 @@ function CommunityPage() {
                 />
 
                 <ArticleViewPage 
+                    post={selectedPost} // 선택된 게시글 전달
                     modalIsOpen={viewModalIsOpen} 
                     setModalIsOpen={setViewModalIsOpen}
-                    post={selectedPost} // 선택된 게시글 전달
                 />
+
             </Container>
         </Layout>
     );
