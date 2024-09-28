@@ -12,8 +12,8 @@ const Container = styled.div`
 `;
 
 const TrashCanContainer = styled.div`
-    width: 50vw;
-    height: 70vh;
+    width: 392px;
+    height: 548px;
     background-image: url(${EmotionTrash});
     background-repeat: no-repeat;
     background-size: contain; // 이미지 크기에 맞춰 조절
@@ -25,8 +25,8 @@ const TrashCanContainer = styled.div`
 const Bubble = styled.div`
     background-color: ${({ color }) => color};
     border-radius: 50%;
-    width: 50px; // 구슬 크기 조정
-    height: 50px; // 구슬 크기 조정
+    width: 70px; // 구슬 크기 조정
+    height: 70px; // 구슬 크기 조정
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,20 +41,63 @@ function EmotionPage() {
     const emotions = useEmotions();
     const [bubbles, setBubbles] = useState([]);
 
+    // 구슬의 반지름 정의
+    const bubbleRadius = 35; // 70px 크기의 구슬의 반지름
+
     useEffect(() => {
         const mockData = [
             { emotion: "yellow" },
             { emotion: "green" },
             { emotion: "blue" },
-            { emotion: "red" },
+            { emotion: "red" }
         ];
 
-        const mappedBubbles = mockData.map(bubble => {
+        const newBubbles = [];
+
+        // 캠퍼스와 쓰레기통의 크기
+        const trashCanWidth = 392;
+        const trashCanHeight = 548;
+        const maxHeight = 400; // 감정 구슬들이 쌓일 최대 높이
+
+        // 각 색상마다 3개씩 추가
+        mockData.forEach(bubble => {
             const { emotion } = bubble;
-            return emotions[emotion]; // 해당 이모지와 색상 반환
+
+            for (let i = 0; i < 3; i++) {
+                let positionFound = false;
+
+                while (!positionFound) {
+                    // 랜덤 위치 생성
+                    const x = Math.random() * (trashCanWidth - bubbleRadius * 2) + bubbleRadius;
+                    const y = Math.random() * (maxHeight - bubbleRadius * 2) + bubbleRadius; // maxHeight를 기준으로 조정
+
+                    // 겹치는지 확인
+                    const overlap = newBubbles.some(existingBubble => {
+                        const existingX = parseFloat(existingBubble.left);
+                        const existingY = parseFloat(existingBubble.bottom) + bubbleRadius;
+                        const distance = Math.sqrt((existingX - x) ** 2 + (existingY - y) ** 2);
+                        return distance < bubbleRadius * 2; // 반지름의 합
+                    });
+
+                    // 쓰레기통 범위 내에 완전히 포함되는지 확인
+                    if (!overlap && (y <= trashCanHeight - bubbleRadius)) {
+                        // 위치가 겹치지 않으면 구슬 추가
+                        newBubbles.push({
+                            color: emotions[emotion].color,
+                            emoji: emotions[emotion].emoji,
+                            left: `${x}px`,
+                            bottom: `${y}px`
+                        });
+                        positionFound = true;
+                    }
+                }
+            }
         });
 
-        setBubbles(mappedBubbles);
+        // y값을 기준으로 정렬하여 아래에서부터 쌓이도록
+        newBubbles.sort((a, b) => parseFloat(a.bottom) - parseFloat(b.bottom));
+
+        setBubbles(newBubbles);
     }, [emotions]);
 
     return (
@@ -65,8 +108,8 @@ function EmotionPage() {
                         <Bubble 
                             key={index} 
                             color={bubble.color} 
-                            left={`${(index + 1) * 10}%`} // 위치 조정
-                            bottom={`${5 + index * 15}px`} // 떨어지는 느낌을 위해 아래에서 위로
+                            left={bubble.left} 
+                            bottom={`${parseFloat(bubble.bottom) - bubbleRadius}px`} // 구슬이 짤리지 않도록 보정
                         >
                             {bubble.emoji}
                         </Bubble>
