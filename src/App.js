@@ -11,6 +11,7 @@ import styled from "styled-components";
 import LoginPage from "./component/page/LoginPage";
 import SignupPage from "./component/page/SignupPage";
 import OnboardingPage from "./component/page/OnboardingPage";
+import CommunityPage  from "./component/page/CommunityPage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
 		<Route index element={<OnboardingPage />} />
 		<Route path="login" element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
-    
+		<Route path="community" element={<CommunityPage />} />
 		{/* <Route path="main/:communityid" element={<MainPage />} /> */}
 	</Routes>
   );
