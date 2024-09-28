@@ -22,7 +22,7 @@ const RoundedBox = styled.div`
     background-color: #F7F0EB;
     padding: 15px;
     margin: 15px;
-    width: 1500px;
+    width: 1300px;
     height: 5px;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
     display: flex;
