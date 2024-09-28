@@ -25,7 +25,7 @@ function Button(props){
     return(
         <StyleButton onClick={onClick} animate={["initial"]}
         whileHover={["grow"]} variants={hoverVariants} disabled={disabled}>
-            { title || "버튼"}
+            { title || "+" }
         </StyleButton>
     );
 }
