@@ -7,10 +7,10 @@
   appearance: none;
   border: max(2px, 0.1em) solid gray;
   border-radius: 50%;
-  width: 1em;
-  height: 1em;
-  margin-left: 70px;
-  margin-bottom: 30px;
+  width: 1.2em; /* 크기 조정 */
+  height: 1.2em; /* 크기 조정 */
+  margin-left: 30px; /* 텍스트와의 간격 조정 */
+  margin-bottom: 0; /* 여백 제거 */
 }
 
 [type="radio"]:checked {
@@ -41,4 +41,8 @@
 [type="radio"]:disabled + span {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+label span {
+  margin-left: 8px; /* 라디오 버튼과 텍스트 사이의 간격 */
 }

@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center; // 가운데 정렬
-  padding: 0 10vw; // 양쪽 패딩
+  padding: 0 20vw; // 양쪽 패딩
 `;
 
 const Text = styled.div`
@@ -15,7 +15,7 @@ const Text = styled.div`
   text-align: center; // 가운데 정렬
   font-size: 30px;
   font-weight: 300;
-  margin: 20px 0; // 위아래 여백을 주기 위해 margin 설정
+  margin: 40px 0; // 위아래 여백을 주기 위해 margin 설정
 `;
 
 const StyledButtonContainer = styled.div`
@@ -33,14 +33,15 @@ const StyledButtonContainer = styled.div`
 
 const QuestionContainer = styled.div`
   margin: 20px 0; // 각 질문 사이에 여백을 주기 위해 margin 설정
+  width: 100%;
 `;
 
-const radioOptions = [
+const radioOptions = [ 
     { value: "0", label: "전혀 없었다" },
-    { value: "1", label: "거의 없었다" },
-    { value: "2", label: "때때로 있었다" },
-    { value: "3", label: "자주 있었다" },
-    { value: "4", label: "매우 자주 있었다" },
+    { value: "2.5", label: "거의 없었다" },
+    { value: "5", label: "때때로 있었다" },
+    { value: "7.5", label: "자주 있었다" },
+    { value: "10", label: "매우 자주 있었다" },
 ];
 
 const questions = [
@@ -58,9 +59,28 @@ const questions = [
 
 function TestPage() {
     const [answers, setAnswers] = useState({});
+    const [score, setScore] = useState(null); // 점수를 저장할 상태
 
     const handleAnswerChange = (questionName, value) => {
-        setAnswers(prevAnswers => ({ ...prevAnswers, [questionName]: value }));
+        setAnswers(prevAnswers => {
+            const newAnswers = { ...prevAnswers, [questionName]: value };
+            console.log("현재 답변:", newAnswers); // 상태가 업데이트된 후 로그 출력
+            return newAnswers;
+        });
+    };
+
+    const calculateScore = () => {
+        console.log("최종 답변:", answers); // 점수를 계산하기 전에 로그 출력
+
+        // answers 객체에서 값이 있는 경우만 계산
+        const totalScore = Object.values(answers)
+            .filter(value => value !== undefined) // 값이 있는 것만 필터링
+            .map(value => parseFloat(value)) // float로 변환
+            .reduce((acc, curr) => acc + curr, 0);
+
+        const finalScore = Math.max(0, Math.min(totalScore, 100)); // 최소 0, 최대 100으로 제한
+        setScore(finalScore); // 점수 상태 업데이트
+        console.log("현재 점수:", finalScore);
     };
 
     return (
@@ -78,8 +98,11 @@ function TestPage() {
                 </QuestionContainer>
             ))}
             <StyledButtonContainer>
-                <Button title="제출하기" />
+                <Button title="제출하기" onClick={calculateScore} />
             </StyledButtonContainer>
+            {score !== null && (
+                <Text>당신의 점수: {score}점</Text> // 결과 점수 표시
+            )}
         </Wrapper>
     );
 }
