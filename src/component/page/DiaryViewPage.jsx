@@ -1,8 +1,9 @@
-import {React, useState, useEffect, useRef} from "react";
-import { useParams } from "react-router-dom";
-import styled,{keyframes} from "styled-components";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
+import Button from "../ui/Button";
 
 const fadeIn = keyframes`
     from {
@@ -22,64 +23,82 @@ const fadeOut = keyframes`
     }
 `;
 
-
 const Wrapper = styled.div`
-`
+`;
 
-const Top = styled.div`
-    display: flex;
-    // height: 10vh;
-    justify-content: space-between;
-    margin-right : 3vw;
-    align-items: center;
-`
-const ContentText = styled.div`
-    text-align : center;
-    font-size : 2vh;
-    font-weight : 600;
-`
+const DisplayEmoticon = styled.div`
+    
+`;
+
 const DateText = styled.div`
-    text-align : center;
-    color: #C7DB44;
-    margin-bottom : 3vh;
-`
-const TitleText = styled.div`
-    text-align : left;
-    margin-left : 3vw;
-    margin-right : 1vw;
-    font-size: 3vh;
-    color: #545454;
-    font-weight : 500;
-`
+    text-align: center;
+    margin-bottom: 3vh;
+    font-size: 2.5vh;
+    color: #333;
+`;
 
-const TitleDelete = styled.div`
+const DisplayText = styled.div`
+    margin-top: 1vh;
+    border: 0px solid;
+    width: 100%;
+    height: 8vh;
+    padding: 10px;
+    font-size: 2vh;
+    font-weight: 500;
+    background-color: #F7F0EB;
+    border-radius: 20px;
     display: flex;
+    align-items: center;
+`;
+
+const DisplayContent = styled.div`
+    margin-top: 3vh;
+    border: 0px solid;
+    width: 100%;
+    height: 20vh;
+    font-size: 2vh;
+    font-weight: 500;
+    background-color: #F7F0EB;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+`;
+
+const ButtonContainer  = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 `
 
 const StyledModal = {
     overlay: {
-		position: "fixed",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		backgroundColor: "rgba(255, 255, 255, 0.45)",
-		zIndex: 1,
-	},
- 	content: {
-        flexDirection: "column",
- 		background: "#fff",
- 		overflow: "auto",
- 		WebkitOverflowScrolling: "touch",
- 		borderRadius: "30px",
- 		outline: "none",
- 		zIndex: 10,
-        top: '5vh',
-        left: '25vw',
-        right: '25vw',
-        bottom: '5vh',
- 	},
-}
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1,
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: "#fff",
+        overflow: "auto",
+        borderRadius: "30px",
+        outline: "none",
+        zIndex: 10,
+        top: '10vh',
+        left: '10vw',
+        right: '10vw',
+        bottom: '10vh',
+        padding: '20px',
+        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+    },
+};
 
 const ModalStyle = styled.div`
     animation: ${(props) => (props.isOpen ? fadeIn : fadeOut)} 0.4s ease-in;
@@ -95,8 +114,8 @@ const OverlayStyle = styled.div`
 
 function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
     const [diary, setDiary] = useState("");
-
-    return(
+    const navigate = useNavigate();
+    return (
         <Wrapper>
             <Modal
                 isOpen={modalIsOpen}
@@ -114,13 +133,24 @@ function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
                     </OverlayStyle>
                 )}
             >
-                <ContentText>추억 확인하기</ContentText>
-                <DateText>Date: {date}</DateText>
-                <Top>
-                    <TitleDelete>
-                        <TitleText>{diary.title}</TitleText>
-                    </TitleDelete>
-                </Top>
+                <DisplayEmoticon></DisplayEmoticon>
+                <DateText>{date}</DateText>
+                <DisplayText>첫 해커톤 참여!</DisplayText>
+                <DisplayContent>떨렸답!</DisplayContent>
+                <ButtonContainer>
+                <Button
+                    title="해소하기"
+                    onClick={() => {
+                        navigate("/emotion");
+                    }}
+                />
+                <Button
+                    title="확인"
+                    onClick={() => {
+                        setModalIsOpen(false);
+                    }}
+                />
+                </ButtonContainer>
             </Modal>
         </Wrapper>
     );

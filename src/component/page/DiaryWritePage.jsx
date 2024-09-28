@@ -2,14 +2,13 @@ import {React, useState, useEffect, useRef} from "react";
 // import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../ui/Button";
-import Input from "../ui/Input";
 import moment from 'moment';
-import { useNavigate, useParams } from "react-router-dom";;
+import Layout from "../../Layout";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
-    height: 95vh;
     display: flex;
     flex-direction: column;
 `
@@ -21,7 +20,7 @@ const ContentText = styled.div`
 `
 
 const DiaryWriteContainer = styled.div`
-    margin-top: 20px;
+    width: 100%;
 `
 
 const TitleText = styled.div`
@@ -39,6 +38,7 @@ const StyledInputForm = styled.div`
     margin-top : 1vh;
     margin-left : 3vw;
     margin-right : 3vw;
+    
     >input {
         border : 0px solid;
         width : 100%;
@@ -46,6 +46,9 @@ const StyledInputForm = styled.div`
         padding-bottom : 1vh;
         font-size: 2vh;
         font-weight : 500;
+        background-color: #F7F0EB;
+        padding: 10px;
+        border-radius: 20px;
     }
     >input::placeholder {
         color: #D9D9D9;
@@ -59,16 +62,18 @@ const StyledInputContent = styled.div`
     margin-top : 1vh;
     margin-left : 3vw;
     margin-right : 3vw;
-    width: 100%;
+    
     >textarea {
         border : 0px solid;
         width : 100%;
         height : 20vh;
-        // padding-bottom : 5vh;
         font-size: 2vh;
-        word-break:break-all;
+        word-break:normal;
         resize:none;
         overflow: auto;
+        background-color: #F7F0EB;
+        padding: 10px;
+        border-radius: 20px;
     }
     >textarea::placeholder {
         color: #D9D9D9;
@@ -78,34 +83,13 @@ const StyledInputContent = styled.div`
         outline: none;
     }
 `
-const Line = styled.hr`
-    margin-top : 1vh;
-    color : #A9A9A9;
-    border : 1px solid #A9A9A9;
-    margin-left : 3vw;
-    margin-right : 3vw;
-`
-const FileUpload = styled.div`
-    margin-top : 2vh;
-    margin-left: 3vw;
-    margin-right: 3vw;
-    height: 15vh;
-    display: flex;
-    >input[type="file"] {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip:rect(0,0,0,0);
-        border: 0;
-    }
-`
+
 const StyledButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    margin-top: 3vh;
 
     >Button{
     width: 70vw;
@@ -114,17 +98,7 @@ const StyledButtonContainer = styled.div`
     }
 `
 
-const required = (value) => {
-    if (!value) {
-        return (
-        <div className="invalid-feedback d-block">
-            This field is required!
-        </div>
-        );
-    }
-};
-
-function DiaryWritePage(props) {
+function DiaryWritePage() {
     const form = useRef();
     const params = useParams();
 
@@ -147,10 +121,11 @@ function DiaryWritePage(props) {
     };
 
     return (
+        <Layout>
         <Wrapper>
             <ContentText>{today}</ContentText>
             <DiaryWriteContainer>
-                <TitleText>일기 제목 ({title.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
+                <TitleText>({title.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
                 <StyledInputForm>
                     <input
                         type="text"
@@ -160,23 +135,21 @@ function DiaryWritePage(props) {
                         value={title}
                         required
                         onChange={onChangeTitle}
-                        placeholder="20글자 이내로 제목을 입력해주세요 :)"
+                        placeholder="일기 제목"
                     />
                 </StyledInputForm>
-                <Line />
 
-                <TitleText>글을 작성하세요! ({content.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
+                <TitleText>({content.replace(/<br\s*\?>/gm, "\n").length}글자)</TitleText>
                 <StyledInputContent>
-                    <Input />
-                    {/* <textarea
+                    <textarea
                         name="content"
                         id="content"
                         maxLength={200}
                         value={content}
                         required
                         onChange={onChangeContent}
-                        placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
-                    /> */}
+                        placeholder="글을 작성하세요!"
+                    />
                 </StyledInputContent>
                 <StyledButtonContainer>
                     <Button
@@ -188,6 +161,7 @@ function DiaryWritePage(props) {
                 </StyledButtonContainer>
             </DiaryWriteContainer>
         </Wrapper>
+        </Layout>
     );
 }
 
