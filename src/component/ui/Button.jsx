@@ -13,18 +13,12 @@ const StyleButton = styled(motion.button)`
     margin: 15px 0px;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
 `
-const hoverVariants = {
-    grow: {
-      scale: 1.1
-    },
-};
-
 function Button(props){
     const { title, onClick, disabled } = props;
 
     return(
         <StyleButton onClick={onClick} animate={["initial"]}
-        whileHover={["grow"]} variants={hoverVariants} disabled={disabled}>
+        whileHover={["grow"]} disabled={disabled}>
             { title || "+" }
         </StyleButton>
     );
