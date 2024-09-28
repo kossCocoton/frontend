@@ -11,7 +11,6 @@ const RoundedBox = styled.div`
     font-weight: 200;
     border-radius: 10px; /* 둥글게 */
     border: 0px;
-    cursor: pointer;
     background-color: #F7F0EB;
     padding: 15px;
     margin: 15px 0; /* 위아래 여백 */
@@ -23,7 +22,7 @@ const RoundedBox = styled.div`
 `;
 
 const Label = styled.label`
-    margin-right: 10px; /* 라디오 버튼과의 간격 */
+    margin-right: 30px; /* 라디오 버튼과의 간격 */
     cursor: pointer; /* 커서 포인터로 변경 */
 `;
 
