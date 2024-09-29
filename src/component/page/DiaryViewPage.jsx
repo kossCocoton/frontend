@@ -110,25 +110,13 @@ const OverlayStyle = styled.div`
     transition: visibility 0.2s ease-out;
 `;
 
-function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
-    const [diary, setDiary] = useState({ title: "", content: "" });
+function DiaryViewPage({ date, modalIsOpen, setModalIsOpen, diaryTitle, diaryContent }) {
+    const [diary, setDiary] = useState({ title: diaryTitle, content: diaryContent });
     const navigate = useNavigate();
-
-    // 모달이 열릴 때마다 해당 날짜의 일기를 가져오는 useEffect
     useEffect(() => {
-        const fetchDiary = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/diary/${date}`);
-                setDiary(response.data);
-            } catch (error) {
-                console.error('일기 가져오기 실패:', error);
-            }
-        };
-
-        if (modalIsOpen) {
-            fetchDiary();
-        }
-    }, [modalIsOpen, date]);
+        // Update diary state when props change
+        setDiary({ title: diaryTitle, content: diaryContent });
+    }, [diaryTitle, diaryContent]);
 
     return (
         <Wrapper>
@@ -136,7 +124,7 @@ function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
                 isOpen={modalIsOpen}
                 ariaHideApp={false}
                 style={StyledModal}
-                onRequestClose={() => setModalIsOpen(false)} // 모달 닫기
+                onRequestClose={() => setModalIsOpen(false)}
                 contentElement={(props, children) => (
                     <ModalStyle isOpen={modalIsOpen} {...props}>
                         {children}
