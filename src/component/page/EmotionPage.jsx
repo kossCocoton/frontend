@@ -56,9 +56,9 @@ function EmotionPage() {
         ];
 
         const newBubbles = [];
-        const trashCanWidth = 392;
-        const trashCanHeight = 548;
-        const maxHeight = 400;
+        const trashCanWidth = 332;
+        const trashCanHeight = 480;
+        const maxHeight = 350;
 
         mockData.forEach(bubble => {
             const { emotion } = bubble;
