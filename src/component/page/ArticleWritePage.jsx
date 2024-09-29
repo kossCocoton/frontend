@@ -93,7 +93,7 @@ function ArticleWritePage({ modalIsOpen, setModalIsOpen }) {
     return (
         <ModalWrapper modalIsOpen={modalIsOpen}>
             <ModalContent>
-                <TitleText>일기 제목</TitleText>
+                <TitleText>글 제목</TitleText>
                 <StyledInputForm>
                     <input
                         type="text"
