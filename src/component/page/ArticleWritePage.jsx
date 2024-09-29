@@ -71,14 +71,14 @@ function ArticleWritePage({ modalIsOpen, setModalIsOpen }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const writeData = new writeData(title,content);
+        const writeData = new WriteData(title,content);
         try {
             // API에 POST 요청
             const response = await axios.post('http://localhost:8080/api/diary', {title,content,category});
       
           } catch (error) {
-            console.error('회원가입 실패', error);
-            alert('회원가입 실패');
+            console.error('글 작성 실패', error);
+            alert('글 작성 실패');
           }
         // 폼 제출 로직
         setModalIsOpen(false);
@@ -108,7 +108,7 @@ function ArticleWritePage({ modalIsOpen, setModalIsOpen }) {
                 </StyledInputContent>
 
                 <StyledButtonContainer>
-                    <Button title="작성하기" onClick={handleSubmit} />
+                    <Button title="작성하기" onClick={(e) => handleSubmit(e)} />
                 </StyledButtonContainer>
             </ModalContent>
         </ModalWrapper>
