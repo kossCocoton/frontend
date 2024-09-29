@@ -62,19 +62,24 @@ const StyledButtonContainer = styled.div`
     margin-top: 3vh;
 `;
 
+class WriteData {
+    constructor(title, content) {
+      this.title = title;
+      this.content = content;
+    }
+  }
+
 function ArticleWritePage({ modalIsOpen, setModalIsOpen }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
-    const category = "ETC";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const writeData = new WriteData(title,content);
         try {
             // API에 POST 요청
-            const response = await axios.post('http://localhost:8080/api/diary', {title,content,category});
+            const response = await axios.post('http://localhost:8080/api/diary', writeData);
       
           } catch (error) {
             console.error('글 작성 실패', error);
