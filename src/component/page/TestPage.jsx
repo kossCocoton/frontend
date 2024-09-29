@@ -95,7 +95,6 @@ function TestPage() {
   };
 
   const calculateScore = () => {
-    console.log("최종 답변:", answers);
     const totalScore = Object.values(answers)
       .filter((value) => value !== undefined)
       .map((value) => parseFloat(value))
@@ -103,10 +102,10 @@ function TestPage() {
 
     const finalScore = Math.max(0, Math.min(totalScore, 100));
     setScore(finalScore);
-    console.log("현재 점수:", finalScore);
 
-    navigate("/my");
-  };
+    // 상태와 함께 내비게이트
+    navigate("/my", { state: { score: finalScore } });
+};
 
   return (
     <Wrapper>

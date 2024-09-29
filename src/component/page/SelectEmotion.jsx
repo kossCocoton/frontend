@@ -105,7 +105,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😁" // 이모지 값으로 변경
+                                value="😁" 
                                 checked={selectedEmotion === '😁'} 
                                 onChange={() => setSelectedEmotion('😁')} 
                             />
@@ -115,7 +115,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😐" // 이모지 값으로 변경
+                                value="😐" 
                                 checked={selectedEmotion === '😐'} 
                                 onChange={() => setSelectedEmotion('😐')} 
                             />
@@ -125,7 +125,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😫" // 이모지 값으로 변경
+                                value="😫" 
                                 checked={selectedEmotion === '😫'} 
                                 onChange={() => setSelectedEmotion('😫')} 
                             />
@@ -135,7 +135,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😠" // 이모지 값으로 변경
+                                value="😠" 
                                 checked={selectedEmotion === '😠'} 
                                 onChange={() => setSelectedEmotion('😠')} 
                             />

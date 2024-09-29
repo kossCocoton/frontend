@@ -40,8 +40,14 @@ const Bubble = styled.div`
     font-size: 1.5em;
 `;
 
+const emotionConfig = {
+    '😁': { color: '#FFD700' }, // 매우 낮음
+    '😐': { color: '#28A745' }, // 낮음
+    '😫': { color: '#007BFF' }, // 높음
+    '😠': { color: '#FF5733' }, // 매우 높음
+};
+
 function EmotionPage() {
-    const emotions = useEmotions();
     const [bubbles, setBubbles] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 상태 추가
 
@@ -86,10 +92,14 @@ function EmotionPage() {
                         });
                         positionFound = true;
                     }
-                }
-            }
-        });
+                });
 
+                newBubbles.sort((a, b) => parseFloat(a.bottom) - parseFloat(b.bottom));
+                setBubbles(newBubbles);
+            } catch (error) {
+                console.error('감정 데이터 가져오기 실패:', error);
+            }
+        };
         newBubbles.sort((a, b) => parseFloat(a.bottom) - parseFloat(b.bottom));
         setBubbles(newBubbles);
     }, [emotions]);

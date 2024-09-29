@@ -299,6 +299,7 @@ function CommunityPage() {
                     modalIsOpen={viewModalIsOpen} 
                     setModalIsOpen={setViewModalIsOpen}
                 />
+
             </Container>
         </Layout>
     );

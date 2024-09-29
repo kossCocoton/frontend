@@ -1,9 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
 import Button from "../ui/Button";
+import axios from 'axios';
 
 const fadeIn = keyframes`
     from {
@@ -23,12 +24,9 @@ const fadeOut = keyframes`
     }
 `;
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;
 
-const DisplayEmoticon = styled.div`
-    
-`;
+const DisplayEmoticon = styled.div``;
 
 const DateText = styled.div`
     text-align: center;
@@ -65,11 +63,11 @@ const DisplayContent = styled.div`
     align-items: center;
 `;
 
-const ButtonContainer  = styled.div`
+const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-`
+`;
 
 const StyledModal = {
     overlay: {
@@ -112,16 +110,21 @@ const OverlayStyle = styled.div`
     transition: visibility 0.2s ease-out;
 `;
 
-function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
-    const [diary, setDiary] = useState("");
+function DiaryViewPage({ date, modalIsOpen, setModalIsOpen, diaryTitle, diaryContent }) {
+    const [diary, setDiary] = useState({ title: diaryTitle, content: diaryContent });
     const navigate = useNavigate();
+    useEffect(() => {
+        // Update diary state when props change
+        setDiary({ title: diaryTitle, content: diaryContent });
+    }, [diaryTitle, diaryContent]);
+
     return (
         <Wrapper>
             <Modal
                 isOpen={modalIsOpen}
                 ariaHideApp={false}
                 style={StyledModal}
-                onRequestClose={() => setModalIsOpen(false)} // 모달 닫기
+                onRequestClose={() => setModalIsOpen(false)}
                 contentElement={(props, children) => (
                     <ModalStyle isOpen={modalIsOpen} {...props}>
                         {children}
@@ -135,21 +138,21 @@ function DiaryViewPage({ date, modalIsOpen, setModalIsOpen }) {
             >
                 <DisplayEmoticon></DisplayEmoticon>
                 <DateText>{date}</DateText>
-                <DisplayText>첫 해커톤 참여!</DisplayText>
-                <DisplayContent>떨렸답!</DisplayContent>
+                <DisplayText>{diary.title || "제목이 없습니다."}</DisplayText>
+                <DisplayContent>{diary.content || "내용이 없습니다."}</DisplayContent>
                 <ButtonContainer>
-                <Button
-                    title="해소하기"
-                    onClick={() => {
-                        navigate("/emotion");
-                    }}
-                />
-                <Button
-                    title="확인"
-                    onClick={() => {
-                        setModalIsOpen(false);
-                    }}
-                />
+                    <Button
+                        title="해소하기"
+                        onClick={() => {
+                            navigate("/emotion");
+                        }}
+                    />
+                    <Button
+                        title="확인"
+                        onClick={() => {
+                            setModalIsOpen(false);
+                        }}
+                    />
                 </ButtonContainer>
             </Modal>
         </Wrapper>
