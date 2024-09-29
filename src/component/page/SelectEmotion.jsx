@@ -1,26 +1,8 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Modal from 'react-modal';
-import '../../style/Modal.css';
 import Button from "../ui/Button";
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
-
-const fadeOut = keyframes`
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-`;
+import axios from 'axios';
 
 const Wrapper = styled.div`
     display: flex;
@@ -56,12 +38,27 @@ const RadioInput = styled.input`
 `;
 
 function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
-    const [selectedEmotion, setSelectedEmotion] = useState(null);
+    const [selectedEmotion, setSelectedEmotion] = useState("");
 
-    const handleSubmit = () => {
-        // 선택된 감정 처리 (예: 서버로 전송)
-        console.log("선택된 감정:", selectedEmotion);
-        setModalIsOpen(false); // 모달 닫기
+    const handleSubmit = async () => {
+        if (!selectedEmotion) {
+            alert("감정을 선택하세요.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/emotion', {emoji: selectedEmotion}, {
+                headers: {
+                    'Content-Type' : 'application/json',
+                }
+            }); // 이모지를 문자열로 전송
+
+            console.log("서버 응답:", response.data);
+            setModalIsOpen(false); // 모달 닫기
+        } catch (error) {
+            console.error("이모지 전송 실패:", error);
+            alert("이모지 전송에 실패했습니다.");
+        }
     };
 
     return (
@@ -100,12 +97,12 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                 onRequestClose={() => setModalIsOpen(false)} // 모달 닫기
             >
                 <ModalContent>
-                <EmotionContainer>
+                    <EmotionContainer>
                         <EmotionOption>
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😁" // 이모지 값으로 변경
+                                value="😁" 
                                 checked={selectedEmotion === '😁'} 
                                 onChange={() => setSelectedEmotion('😁')} 
                             />
@@ -115,7 +112,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😐" // 이모지 값으로 변경
+                                value="😐" 
                                 checked={selectedEmotion === '😐'} 
                                 onChange={() => setSelectedEmotion('😐')} 
                             />
@@ -125,7 +122,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😫" // 이모지 값으로 변경
+                                value="😫" 
                                 checked={selectedEmotion === '😫'} 
                                 onChange={() => setSelectedEmotion('😫')} 
                             />
@@ -135,7 +132,7 @@ function SelectEmotion({ modalIsOpen, setModalIsOpen }) {
                             <RadioInput 
                                 type="radio" 
                                 name="emotion" 
-                                value="😠" // 이모지 값으로 변경
+                                value="😠" 
                                 checked={selectedEmotion === '😠'} 
                                 onChange={() => setSelectedEmotion('😠')} 
                             />

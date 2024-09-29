@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../style/Validation.css";
@@ -6,6 +6,7 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 import CalendarView from "../ui/CalendarView";
 import Layout from "../../Layout";
+import axios from 'axios';
 
 const Wrapper = styled.div`
     height: 95vh;
@@ -71,9 +72,36 @@ const StressGraphContainer = styled.div`
 
 const MyPage = () => {
     const navigate = useNavigate();
+    const [nickname, setNickname] = useState("");
+    const [diaryList, setDiaryList] = useState([]);
+    const [userStressLevel, setUserStressLevel] = useState(0); // 초기값 설정
 
-    // 실제 사용자 스트레스 지수를 가져오는 로직 (예시로 80으로 설정)
-    const userStressLevel = 12; // 여기에 실제 스트레스 지수를 설정하세요
+    useEffect(() => {
+        const fetchMyInfo = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/my');
+                if (response.status === 200) {
+                    const data = response.data;
+                    setNickname(data.nickname);
+                    setDiaryList(data.diaryList);
+                    if (data.stressList.length > 0) {
+                        setUserStressLevel(data.stressList[0].stress);
+                    } else {
+                        setUserStressLevel(0);
+                    }
+                    console.log('응답 완료:', data);
+                } else {
+                    console.error('응답 오류:', response);
+                }
+            } catch (error) {
+                console.error('에러:', error.response ? error.response.data : error.message);
+            }
+        };
+    
+        fetchMyInfo(); // 컴포넌트 마운트 시 데이터 가져오기
+    }, []);
+    
+    
 
     return (
         <Layout>
@@ -85,7 +113,7 @@ const MyPage = () => {
                             <UserStressText>{userStressLevel}</UserStressText>
                             <UserStressText>/100</UserStressText>
                         </Stress>
-                        <UserNickNameText>UserName</UserNickNameText>
+                        <UserNickNameText>{nickname}</UserNickNameText>
                     </StressNumberContainer>
                     <Button
                         title="일기쓰기"
