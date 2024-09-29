@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Layout from '../../Layout';
+import { useEmotions } from '../../component/list/EmotionList';
 import EmotionTrash from "../img/EmotionTrash.png";
 import Button from "../ui/Button";
 import SelectEmotion from "../page/SelectEmotion"; // 모달 컴포넌트 임포트
-import axios from 'axios';
 
 const Container = styled.div`
     display: flex;
@@ -49,48 +49,48 @@ const emotionConfig = {
 
 function EmotionPage() {
     const [bubbles, setBubbles] = useState([]);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 상태 추가
+
     const bubbleRadius = 35;
 
     useEffect(() => {
-        const fetchEmotions = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/api/emotion'); // API 요청
-                const data = response.data.emotions || []; // 기본값으로 빈 배열 설정
+        const mockData = [
+            { emotion: "yellow" },
+            { emotion: "green" },
+            { emotion: "blue" },
+            { emotion: "red" }
+        ];
 
-                const newBubbles = [];
-                const trashCanWidth = 392;
-                const trashCanHeight = 548;
-                const maxHeight = 400;
+        const newBubbles = [];
+        const trashCanWidth = 332;
+        const trashCanHeight = 480;
+        const maxHeight = 350;
 
-                data.forEach((emotion) => {
-                    const { emoji } = emotion;
-                    const { color } = emotionConfig[emoji] || { color: '#FFFFFF' }; // 기본값 설정
+        mockData.forEach(bubble => {
+            const { emotion } = bubble;
 
-                    for (let i = 0; i < 3; i++) {
-                        let positionFound = false;
+            for (let i = 0; i < 3; i++) {
+                let positionFound = false;
 
-                        while (!positionFound) {
-                            const x = Math.random() * (trashCanWidth - bubbleRadius * 2) + bubbleRadius;
-                            const y = Math.random() * (maxHeight - bubbleRadius * 2) + bubbleRadius;
+                while (!positionFound) {
+                    const x = Math.random() * (trashCanWidth - bubbleRadius * 2) + bubbleRadius;
+                    const y = Math.random() * (maxHeight - bubbleRadius * 2) + bubbleRadius;
 
-                            const overlap = newBubbles.some(existingBubble => {
-                                const existingX = parseFloat(existingBubble.left);
-                                const existingY = parseFloat(existingBubble.bottom) + bubbleRadius;
-                                const distance = Math.sqrt((existingX - x) ** 2 + (existingY - y) ** 2);
-                                return distance < bubbleRadius * 2;
-                            });
+                    const overlap = newBubbles.some(existingBubble => {
+                        const existingX = parseFloat(existingBubble.left);
+                        const existingY = parseFloat(existingBubble.bottom) + bubbleRadius;
+                        const distance = Math.sqrt((existingX - x) ** 2 + (existingY - y) ** 2);
+                        return distance < bubbleRadius * 2;
+                    });
 
-                            if (!overlap && (y <= trashCanHeight - bubbleRadius)) {
-                                newBubbles.push({
-                                    color: color, // 이모지에 맞는 색상 설정
-                                    emoji: emoji,
-                                    left: `${x}px`,
-                                    bottom: `${y}px`
-                                });
-                                positionFound = true;
-                            }
-                        }
+                    if (!overlap && (y <= trashCanHeight - bubbleRadius)) {
+                        newBubbles.push({
+                            color: emotions[emotion].color,
+                            emoji: emotions[emotion].emoji,
+                            left: `${x}px`,
+                            bottom: `${y}px`
+                        });
+                        positionFound = true;
                     }
                 });
 
@@ -100,9 +100,9 @@ function EmotionPage() {
                 console.error('감정 데이터 가져오기 실패:', error);
             }
         };
-
-        fetchEmotions(); // 컴포넌트 마운트 시 감정 데이터 가져오기
-    }, []);
+        newBubbles.sort((a, b) => parseFloat(a.bottom) - parseFloat(b.bottom));
+        setBubbles(newBubbles);
+    }, [emotions]);
 
     const handleButtonClick = () => {
         setModalIsOpen(true); // 버튼 클릭 시 모달 열기
